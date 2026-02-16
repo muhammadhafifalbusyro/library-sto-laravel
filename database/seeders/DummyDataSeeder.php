@@ -86,5 +86,6 @@ class DummyDataSeeder extends Seeder
         ]);
         
         // Stock opnames removed to start fresh
+        
     }
 }
