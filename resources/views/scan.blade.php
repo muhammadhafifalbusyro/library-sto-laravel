@@ -43,10 +43,66 @@
                 <h3 class="text-xl font-bold text-gray-900 mb-1" id="book-title">Title</h3>
                 <p class="text-sm text-gray-500 mb-4" id="book-author">Author</p>
 
-                <div class="w-full bg-gray-50 rounded-lg p-4 mb-4 text-left">
-                    <div class="flex justify-between mb-2">
-                        <span class="text-gray-500 text-xs uppercase">Category</span>
-                        <span class="font-bold text-sm" id="book-category">-</span>
+                <div class="w-full bg-gray-50 rounded-lg p-4 mb-4 text-left space-y-2">
+                    <div class="flex justify-between">
+                        <span class="text-gray-500 text-xs uppercase">Penerbit</span>
+                        <span class="font-semibold text-sm text-right ml-4" id="book-publisher">-</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500 text-xs uppercase">Tempat Terbit</span>
+                        <span class="font-semibold text-sm text-right ml-4" id="book-place">-</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500 text-xs uppercase">Tahun Terbit</span>
+                        <span class="font-semibold text-sm text-right ml-4" id="book-year">-</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500 text-xs uppercase">ISBN/ISSN</span>
+                        <span class="font-semibold text-sm text-right ml-4 font-mono" id="book-isbn">-</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500 text-xs uppercase">Bahasa</span>
+                        <span class="font-semibold text-sm text-right ml-4" id="book-language">-</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500 text-xs uppercase">Klasifikasi</span>
+                        <span class="font-semibold text-sm text-right ml-4" id="book-classification">-</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500 text-xs uppercase">Nomor Panggil</span>
+                        <span class="font-semibold text-sm text-right ml-4" id="book-call-number">-</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500 text-xs uppercase">GMD/Jenis</span>
+                        <span class="font-semibold text-sm text-right ml-4" id="book-gmd">-</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500 text-xs uppercase">Kolasi</span>
+                        <span class="font-semibold text-sm text-right ml-4" id="book-collation">-</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500 text-xs uppercase">Edisi</span>
+                        <span class="font-semibold text-sm text-right ml-4" id="book-edition">-</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500 text-xs uppercase">Kala Terbit</span>
+                        <span class="font-semibold text-sm text-right ml-4" id="book-frequency">-</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500 text-xs uppercase">Judul Seri</span>
+                        <span class="font-semibold text-sm text-right ml-4" id="book-series">-</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500 text-xs uppercase">Lampiran</span>
+                        <span class="font-semibold text-sm text-right ml-4" id="book-attachment">-</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500 text-xs uppercase">Tajuk Subjek</span>
+                        <span class="font-semibold text-sm text-right ml-4" id="book-subject">-</span>
+                    </div>
+                    <div class="flex justify-between border-t border-gray-200 pt-2 mt-1">
+                        <span class="text-gray-500 text-xs uppercase">Eksemplar</span>
+                        <span class="font-bold text-sm text-right ml-4" id="book-total-items">-</span>
                     </div>
                 </div>
 
@@ -125,8 +181,21 @@
         const resultCard = document.getElementById('book-result');
         const bookTitle = document.getElementById('book-title');
         const bookAuthor = document.getElementById('book-author');
-        const bookCategory = document.getElementById('book-category');
-        const bookStock = document.getElementById('book-stock');
+        const bookClassification = document.getElementById('book-classification');
+        const bookPublisher = document.getElementById('book-publisher');
+        const bookYear = document.getElementById('book-year');
+        const bookPlace = document.getElementById('book-place');
+        const bookIsbn = document.getElementById('book-isbn');
+        const bookLanguage = document.getElementById('book-language');
+        const bookCallNumber = document.getElementById('book-call-number');
+        const bookGmd = document.getElementById('book-gmd');
+        const bookCollation = document.getElementById('book-collation');
+        const bookEdition = document.getElementById('book-edition');
+        const bookFrequency = document.getElementById('book-frequency');
+        const bookSeries = document.getElementById('book-series');
+        const bookAttachment = document.getElementById('book-attachment');
+        const bookSubject = document.getElementById('book-subject');
+        const bookTotalItems = document.getElementById('book-total-items');
         const bookCover = document.getElementById('book-cover');
         const defaultCover = document.getElementById('default-cover');
         
@@ -173,8 +242,22 @@
 
         function showBook(book) {
             bookTitle.innerText = book.title;
-            bookAuthor.innerText = book.author;
-            bookCategory.innerText = book.category;
+            bookAuthor.innerText = book.author ?? '-';
+            bookPublisher.innerText = book.publisher ?? '-';
+            bookPlace.innerText = book.place_of_publication ?? '-';
+            bookYear.innerText = book.year_of_publication ?? '-';
+            bookIsbn.innerText = book.isbn_issn ?? '-';
+            bookLanguage.innerText = book.language ?? '-';
+            bookClassification.innerText = book.classification ?? '-';
+            bookCallNumber.innerText = book.call_number ?? '-';
+            bookGmd.innerText = book.gmd_type ?? '-';
+            bookCollation.innerText = book.collation ?? '-';
+            bookEdition.innerText = book.edition ?? '-';
+            bookFrequency.innerText = book.frequency_of_publication ?? '-';
+            bookSeries.innerText = book.series_title ?? '-';
+            bookAttachment.innerText = book.attachment ?? '-';
+            bookSubject.innerText = book.subject ?? '-';
+            bookTotalItems.innerText = book.total_items ?? '0';
             
             if (book.cover_url) {
                 bookCover.src = book.cover_url;
