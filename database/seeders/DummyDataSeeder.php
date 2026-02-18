@@ -194,4 +194,3 @@ class DummyDataSeeder extends Seeder
         
     }
 }
-
