@@ -10,9 +10,22 @@ class BookController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(\App\Models\Book::all());
+        $query = \App\Models\Book::query();
+        
+        // Simple search
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('author', 'like', "%{$search}%")
+                  ->orWhere('isbn_issn', 'like', "%{$search}%")
+                  ->orWhere('item_code', 'like', "%{$search}%");
+            });
+        }
+
+        return response()->json($query->latest()->paginate(10));
     }
 
     /**
@@ -21,11 +34,12 @@ class BookController extends Controller
     public function store(\Illuminate\Http\Request $request)
     {
         $validated = $request->validate([
-            'title'                    => 'required|string|max:255',
-            'author'                   => 'required|string|max:255',
+            'title'                    => 'required|string',
+            'author'                   => 'required|string',
             'publisher'                => 'required|string|max:255',
             'place_of_publication'     => 'required|string|max:255',
             'year_of_publication'      => 'required|string|max:4',
+            'item_code'                => 'nullable|string',
             'isbn_issn'                => 'nullable|string|max:30',
             'language'                 => 'nullable|string|max:50',
             'collation'                => 'nullable|string|max:255',
@@ -64,11 +78,12 @@ class BookController extends Controller
         $book = \App\Models\Book::findOrFail($id);
 
         $validated = $request->validate([
-            'title'                    => 'sometimes|string|max:255',
-            'author'                   => 'sometimes|string|max:255',
+            'title'                    => 'sometimes|string',
+            'author'                   => 'sometimes|string',
             'publisher'                => 'sometimes|string|max:255',
             'place_of_publication'     => 'sometimes|string|max:255',
             'year_of_publication'      => 'sometimes|string|max:4',
+            'item_code'                => 'nullable|string',
             'isbn_issn'                => 'nullable|string|max:30',
             'language'                 => 'nullable|string|max:50',
             'collation'                => 'nullable|string|max:255',
