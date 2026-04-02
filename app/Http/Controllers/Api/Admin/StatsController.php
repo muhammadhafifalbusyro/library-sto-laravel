@@ -10,6 +10,7 @@ class StatsController extends Controller
     public function index()
     {
         $totalBooks = \App\Models\Book::count();
+        $totalItems = \App\Models\Book::sum('total_items') ?? 0;
         $verifiedBooks = \App\Models\StockOpname::where('status', 'verified')->count();
         $conditions = \App\Models\StockOpname::select('condition', \Illuminate\Support\Facades\DB::raw('count(*) as total'))
             ->whereNotNull('condition')
@@ -32,10 +33,11 @@ class StatsController extends Controller
         return response()->json([
             'overview' => [
                 'total_books' => $totalBooks,
+                'total_items' => $totalItems,
                 'verified' => $verifiedBooks,
                 'total_commission' => (float)$totalCommission,
                 'current_commission' => $currentCommission ? (float)$currentCommission->value : 0,
-                'progress_percentage' => $totalBooks > 0 ? round(($verifiedBooks / $totalBooks) * 100, 1) : 0,
+                'progress_percentage' => $totalItems > 0 ? round(($verifiedBooks / $totalItems) * 100, 1) : 0,
             ],
             'conditions' => $conditions,
             'contributors' => $contributors,
