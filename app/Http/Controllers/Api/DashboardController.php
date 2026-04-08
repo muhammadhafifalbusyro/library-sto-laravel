@@ -14,6 +14,7 @@ class DashboardController extends Controller
     public function index()
     {
         $totalBooks = Book::count();
+        $totalItems = Book::sum('total_items') ?? 0;
         $verifiedBooks = StockOpname::where('status', 'verified')->count();
         
         $userOpname = StockOpname::where('user_id', auth()->id())
@@ -40,6 +41,7 @@ class DashboardController extends Controller
         return response()->json([
             'stats' => [
                 'total_books' => $totalBooks,
+                'total_items' => $totalItems,
                 'verified_books' => $verifiedBooks, // Total already verified in system
                 'user_verified' => $userOpnameCount, // Current user contribution
                 'user_commission' => (float)$totalCommissionEarned,

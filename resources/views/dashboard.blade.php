@@ -13,55 +13,68 @@
         </div>
 
         <!-- Stats Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8 px-4 sm:px-0">
-            <!-- Total Books -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 border-l-4 border-blue-500">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8 px-4 sm:px-0">
+            <!-- Total Book Titles -->
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4 lg:p-6 border-l-4 border-blue-500">
                 <div class="flex items-center">
                     <div class="p-3 rounded-full bg-blue-100 text-blue-500 mr-4">
-                        <i class="fa-solid fa-book text-2xl"></i>
+                        <i class="fa-solid fa-book text-xl lg:text-2xl"></i>
                     </div>
                     <div>
-                        <p class="text-sm font-medium text-gray-500">Total Books</p>
-                        <p class="text-3xl font-bold text-gray-900" id="stat-total-books">-</p>
+                        <p class="text-xs lg:text-sm font-medium text-gray-500">Total Judul Buku</p>
+                        <p class="text-2xl lg:text-3xl font-bold text-gray-900" id="stat-total-books">-</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Books (Items) -->
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4 lg:p-6 border-l-4 border-indigo-500">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-indigo-100 text-indigo-500 mr-4">
+                        <i class="fa-solid fa-layer-group text-xl lg:text-2xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs lg:text-sm font-medium text-gray-500">Total Buku</p>
+                        <p class="text-2xl lg:text-3xl font-bold text-gray-900" id="stat-total-items">-</p>
                     </div>
                 </div>
             </div>
 
             <!-- Verified Books -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 border-l-4 border-green-500">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4 lg:p-6 border-l-4 border-green-500">
                 <div class="flex items-center">
                     <div class="p-3 rounded-full bg-green-100 text-green-500 mr-4">
-                        <i class="fa-solid fa-check-circle text-2xl"></i>
+                        <i class="fa-solid fa-check-circle text-xl lg:text-2xl"></i>
                     </div>
                     <div>
-                        <p class="text-sm font-medium text-gray-500">Verified System</p>
-                        <p class="text-3xl font-bold text-gray-900" id="stat-verified-books">-</p>
+                        <p class="text-xs lg:text-sm font-medium text-gray-500">Verified System</p>
+                        <p class="text-2xl lg:text-3xl font-bold text-gray-900" id="stat-verified-books">-</p>
                     </div>
                 </div>
             </div>
 
             <!-- Your Contribution -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 border-l-4 border-orange-500">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4 lg:p-6 border-l-4 border-orange-500">
                 <div class="flex items-center">
                     <div class="p-3 rounded-full bg-orange-100 text-orange-500 mr-4">
-                        <i class="fa-solid fa-user-check text-2xl"></i>
+                        <i class="fa-solid fa-user-check text-xl lg:text-2xl"></i>
                     </div>
                     <div>
-                        <p class="text-sm font-medium text-gray-500">Your STO</p>
-                        <p class="text-3xl font-bold text-gray-900" id="stat-user-verified">-</p>
+                        <p class="text-xs lg:text-sm font-medium text-gray-500">Your STO</p>
+                        <p class="text-2xl lg:text-3xl font-bold text-gray-900" id="stat-user-verified">-</p>
                     </div>
                 </div>
             </div>
 
             <!-- Your Commission -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 border-l-4 border-yellow-500">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4 lg:p-6 border-l-4 border-yellow-500">
                 <div class="flex items-center">
                     <div class="p-3 rounded-full bg-yellow-100 text-yellow-500 mr-4">
-                        <i class="fa-solid fa-wallet text-2xl"></i>
+                        <i class="fa-solid fa-wallet text-xl lg:text-2xl"></i>
                     </div>
                     <div>
-                        <p class="text-sm font-medium text-gray-500">Your Commission</p>
-                        <p class="text-2xl font-bold text-gray-900" id="stat-user-commission">-</p>
+                        <p class="text-xs lg:text-sm font-medium text-gray-500">Your Commission</p>
+                        <p class="text-xl lg:text-2xl font-bold text-gray-900" id="stat-user-commission">-</p>
                     </div>
                 </div>
             </div>
@@ -114,6 +127,7 @@
 
             // Update Stats
             document.getElementById('stat-total-books').innerText = data.stats.total_books;
+            document.getElementById('stat-total-items').innerText = data.stats.total_items;
             document.getElementById('stat-verified-books').innerText = data.stats.verified_books;
             document.getElementById('stat-user-verified').innerText = data.stats.user_verified;
             document.getElementById('stat-user-commission').innerText = 'Rp ' + data.stats.user_commission.toLocaleString('id-ID');

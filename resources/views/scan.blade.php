@@ -209,6 +209,7 @@
         const closeModal = document.getElementById('close-modal');
 
         let currentBookId = null;
+        let currentItemCode = null;
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -232,6 +233,7 @@
                     showBook(data.book);
                     updateStatus(data.status, data.verified_by);
                     currentBookId = data.book.id;
+                    currentItemCode = data.scanned_code;
                 } else {
                     errorMsg.innerText = data.message || 'Book not found';
                     errorMsg.classList.remove('hidden');
@@ -297,7 +299,7 @@
 
 
         confirmBtn.addEventListener('click', async () => {
-            if (!currentBookId) return;
+            if (!currentBookId || !currentItemCode) return;
             
             confirmBtn.disabled = true;
             confirmBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
@@ -315,6 +317,7 @@
                     },
                     body: JSON.stringify({
                         book_id: currentBookId,
+                        item_code: currentItemCode,
                         status: 'verified',
                         condition: checkedConditions.join(', '),
                         notes: document.getElementById('notes-input').value

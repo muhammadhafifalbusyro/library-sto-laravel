@@ -23,10 +23,14 @@
         </div>
 
         <!-- Stats Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-8 px-4 sm:px-0">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-8 px-4 sm:px-0">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 border-l-4 border-blue-500">
-                <p class="text-sm font-medium text-gray-500">Total Books</p>
+                <p class="text-sm font-medium text-gray-500">Total Judul Buku</p>
                 <p class="text-3xl font-bold text-gray-900" id="admin-total-books">-</p>
+            </div>
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 border-l-4 border-indigo-500">
+                <p class="text-sm font-medium text-gray-500">Total Buku</p>
+                <p class="text-3xl font-bold text-gray-900" id="admin-total-items">-</p>
             </div>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 border-l-4 border-green-500">
                 <p class="text-sm font-medium text-gray-500">Verified</p>
@@ -44,7 +48,7 @@
                 <p class="text-sm font-medium text-gray-500">Total Komisi</p>
                 <p class="text-2xl font-bold text-gray-900" id="admin-total-commission">-</p>
             </div>
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 border-l-4 border-indigo-500">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 border-l-4 border-purple-500">
                 <p class="text-sm font-medium text-gray-500">Komisi per STO</p>
                 <div class="flex items-baseline">
                     <p class="text-2xl font-bold text-gray-900" id="admin-per-sto-commission">-</p>
@@ -101,11 +105,13 @@
 
 @push('scripts')
 <script>
-    document.addEventListener('DOMContentLoaded', async () => {
+    const fetchStats = async () => {
         const token = localStorage.getItem('token');
-        if (!token) window.location.href = '/login';
+        if (!token) {
+            window.location.href = '/login';
+            return;
+        }
 
-        // Fetch Stats
         try {
             const response = await fetch('/api/admin/stats', {
                 headers: {
@@ -124,6 +130,7 @@
 
             // Overview
             document.getElementById('admin-total-books').innerText = data.overview.total_books;
+            document.getElementById('admin-total-items').innerText = data.overview.total_items;
             document.getElementById('admin-verified-books').innerText = data.overview.verified;
             document.getElementById('admin-progress').innerText = data.overview.progress_percentage + '%';
             document.getElementById('admin-total-commission').innerText = 'Rp ' + data.overview.total_commission.toLocaleString('id-ID');
@@ -187,7 +194,9 @@
         } catch (error) {
             console.error('Error fetching admin stats:', error);
         }
-    });
+    };
+
+    document.addEventListener('DOMContentLoaded', fetchStats);
 
     const commissionModal = document.getElementById('commission-modal');
     const commissionForm = document.getElementById('commission-form');
@@ -245,6 +254,7 @@
             if (res.ok) {
                 alert('Setting berhasil disimpan!');
                 closeCommissionModal();
+                fetchStats(); // Update dashboard immediately without page refresh
             } else {
                 alert('Gagal menyimpan setting');
             }
