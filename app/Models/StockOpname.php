@@ -13,6 +13,7 @@ class StockOpname extends Model
     protected $fillable = [
         'user_id',
         'book_id',
+        'item_code',
         'status',
         'condition',
         'notes',
