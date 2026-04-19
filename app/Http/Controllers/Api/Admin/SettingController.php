@@ -26,6 +26,10 @@ class SettingController extends Controller
             ['value' => $request->commission]
         );
 
+        // Sync all existing verified stock opnames to the new commission rate
+        \App\Models\StockOpname::where('status', 'verified')
+            ->update(['earned_commission' => $request->commission]);
+
         return response()->json(['message' => 'Setting updated successfully']);
     }
 }

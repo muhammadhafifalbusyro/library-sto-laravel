@@ -19,8 +19,10 @@ Route::group([
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/history', [StockOpnameController::class, 'history']);
     Route::get('/books/{isbn}', [StockOpnameController::class, 'searchBook']);
     Route::post('/stock-opname', [StockOpnameController::class, 'store']);
+    Route::put('/stock-opname/{id}', [StockOpnameController::class, 'update']);
 });
 
 Route::group(['middleware' => ['auth:api', 'is_admin'], 'prefix' => 'admin'], function () {

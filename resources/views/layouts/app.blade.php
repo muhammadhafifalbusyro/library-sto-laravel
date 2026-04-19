@@ -88,7 +88,11 @@
 
                // Force Refresh User Data (Reliable)
                fetch('/api/auth/me', {
-                   headers: { 'Authorization': 'Bearer ' + token }
+                   method: 'POST',
+                   headers: { 
+                       'Authorization': 'Bearer ' + token,
+                       'Accept': 'application/json'
+                   }
                })
                .then(res => {
                    if(res.ok) return res.json();

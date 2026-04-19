@@ -17,18 +17,20 @@ class DashboardController extends Controller
         $totalItems = Book::sum('total_items') ?? 0;
         $verifiedBooks = StockOpname::where('status', 'verified')->count();
         
-        $userOpname = StockOpname::where('user_id', auth()->id())
-            ->where('status', 'verified');
+        $userOpnameCount = StockOpname::where('user_id', auth()->id())
+            ->where('status', 'verified')
+            ->count();
+            
+        $commissionSetting = \App\Models\Setting::where('key', 'commission')->first();
+        $currentCommissionValue = $commissionSetting ? (float)$commissionSetting->value : 0;
         
-        $userOpnameCount = $userOpname->count();
-        $totalCommissionEarned = $userOpname->sum('earned_commission');
+        $totalCommissionEarned = $userOpnameCount * $currentCommissionValue;
 
         // Simple Leaderboard: Top 5 users with most verified opnames
         $leaderboard = User::withCount(['stockOpnames' => function ($query) {
                 $query->where('status', 'verified');
             }])
             ->orderByDesc('stock_opnames_count')
-            ->take(5)
             ->get()
             ->map(function ($user) {
                 return [
