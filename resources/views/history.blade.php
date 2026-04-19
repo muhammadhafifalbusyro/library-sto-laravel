@@ -94,9 +94,6 @@
                     <span>Simpan Perubahan</span>
                 </button>
             </div>
-            <p class="text-center text-[10px] text-gray-400 mt-4 leading-normal italic">
-                *Mengubah kondisi tidak akan menambah atau mengubah nominal komisi yang sudah didapatkan.
-            </p>
         </div>
     </div>
 </div>
