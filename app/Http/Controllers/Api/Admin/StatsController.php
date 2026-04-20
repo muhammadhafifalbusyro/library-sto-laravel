@@ -20,15 +20,21 @@ class StatsController extends Controller
         $contributors = \App\Models\User::withCount(['stockOpnames' => function($q) {
                 $q->where('status', 'verified');
             }])
-            ->withSum(['stockOpnames as total_commission' => function($q) {
-                $q->where('status', 'verified');
-            }], 'earned_commission')
             ->orderByDesc('stock_opnames_count')
-            ->take(5)
             ->get();
 
-        $totalCommission = \App\Models\StockOpname::where('status', 'verified')->sum('earned_commission');
-        $currentCommission = \App\Models\Setting::where('key', 'commission')->first();
+        $totalCommissionConfig = \App\Models\Setting::where('key', 'commission')->first();
+        $currentCommissionValue = $totalCommissionConfig ? (float)$totalCommissionConfig->value : 0;
+
+        // Calculate commissions on the fly based on current rate
+        $contributors->map(function($user) use ($currentCommissionValue) {
+            $user->total_commission = $user->stock_opnames_count * $currentCommissionValue;
+            return $user;
+        });
+
+        $totalVerifiedCount = \App\Models\StockOpname::where('status', 'verified')->count();
+        $totalCommission = $totalVerifiedCount * $currentCommissionValue;
+        $currentCommission = $totalCommissionConfig;
 
         return response()->json([
             'overview' => [

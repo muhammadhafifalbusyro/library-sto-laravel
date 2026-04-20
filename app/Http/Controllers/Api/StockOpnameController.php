@@ -73,4 +73,36 @@ class StockOpnameController extends Controller
             'earned_commission' => $commissionValue
         ]);
     }
+
+    public function history()
+    {
+        $history = StockOpname::where('user_id', auth()->id())
+            ->with('book')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return response()->json($history);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'condition' => 'required|string',
+            'notes' => 'nullable|string',
+        ]);
+
+        $opname = StockOpname::where('id', $id)
+            ->where('user_id', auth()->id())
+            ->firstOrFail();
+
+        $opname->update([
+            'condition' => $request->condition,
+            'notes' => $request->notes,
+        ]);
+
+        return response()->json([
+            'message' => 'Stock opname updated successfully',
+            'data' => $opname
+        ]);
+    }
 }

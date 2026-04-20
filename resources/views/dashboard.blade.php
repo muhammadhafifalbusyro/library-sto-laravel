@@ -6,10 +6,17 @@
         
         <!-- Welcome Message -->
         <div class="mb-8 px-4 sm:px-0">
-            <h2 class="text-2xl font-bold text-gray-800">
-                Hello, <span id="user-name">User</span>! 👋
-            </h2>
-            <p class="text-gray-600">Here is the stock opname progress.</p>
+            <div class="flex justify-between items-center">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">
+                        Hello, <span id="user-name">User</span>! 👋
+                    </h2>
+                    <p class="text-gray-600">Here is the stock opname progress.</p>
+                </div>
+                <a href="/history" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-lg shadow-sm font-semibold transition flex items-center">
+                    <i class="fa-solid fa-clock-rotate-left mr-2"></i> Riwayat STO
+                </a>
+            </div>
         </div>
 
         <!-- Stats Grid -->

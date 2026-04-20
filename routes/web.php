@@ -18,6 +18,10 @@ Route::get('/scan', function () {
     return view('scan');
 })->name('scan');
 
+Route::get('/history', function () {
+    return view('history');
+})->name('history');
+
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
 })->name('admin.dashboard');
